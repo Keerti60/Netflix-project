@@ -1,0 +1,791 @@
+/* ==================== CSS Variables ==================== */
+:root {
+    --netflix-red: #E50914;
+    --netflix-black: #141414;
+    --netflix-dark-gray: #181818;
+    --netflix-gray: #2F2F2F;
+    --netflix-light-gray: #808080;
+    --netflix-white: #FFFFFF;
+    --transition-speed: 0.3s;
+    --header-height: 70px;
+}
+
+/* ==================== Reset & Base Styles ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--netflix-black);
+    color: var(--netflix-white);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: var(--netflix-black);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--netflix-gray);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--netflix-light-gray);
+}
+
+/* ==================== Header ==================== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+    z-index: 1000;
+    transition: background-color var(--transition-speed);
+}
+
+.header.scrolled {
+    background-color: var(--netflix-black);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 4%;
+    height: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.logo {
+    width: 110px;
+    cursor: pointer;
+}
+
+.netflix-logo {
+    width: 100%;
+    height: auto;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    color: var(--netflix-white);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: color var(--transition-speed);
+    position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--netflix-light-gray);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.voice-btn,
+.search-btn {
+    background: transparent;
+    border: none;
+    color: var(--netflix-white);
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    transition: color var(--transition-speed);
+}
+
+.voice-btn {
+    width: 28px;
+    height: 28px;
+}
+
+.voice-btn:hover,
+.search-btn:hover {
+    color: var(--netflix-light-gray);
+}
+
+.voice-icon {
+    width: 100%;
+    height: 100%;
+}
+
+.voice-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--netflix-red);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.voice-btn.active .voice-pulse {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0;
+    }
+}
+
+.search-btn svg,
+.notifications svg {
+    width: 100%;
+    height: 100%;
+}
+
+.notifications {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: color var(--transition-speed);
+}
+
+.notifications:hover {
+    color: var(--netflix-light-gray);
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.profile img {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+}
+
+.dropdown-icon {
+    width: 12px;
+    height: 12px;
+    transition: transform var(--transition-speed);
+}
+
+.profile:hover .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+/* ==================== Voice Feedback ==================== */
+.voice-feedback {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--netflix-red);
+    border-radius: 20px;
+    padding: 3rem 4rem;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-speed);
+}
+
+.voice-feedback.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.voice-feedback-content {
+    text-align: center;
+}
+
+.voice-animation {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.voice-wave {
+    width: 6px;
+    background: var(--netflix-red);
+    border-radius: 3px;
+    animation: wave 1s infinite ease-in-out;
+}
+
+.voice-wave:nth-child(1) {
+    height: 30px;
+    animation-delay: 0s;
+}
+
+.voice-wave:nth-child(2) {
+    height: 40px;
+    animation-delay: 0.1s;
+}
+
+.voice-wave:nth-child(3) {
+    height: 30px;
+    animation-delay: 0.2s;
+}
+
+@keyframes wave {
+    0%, 100% {
+        transform: scaleY(1);
+    }
+    50% {
+        transform: scaleY(1.5);
+    }
+}
+
+.voice-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.voice-command {
+    font-size: 1.5rem;
+    color: var(--netflix-red);
+    font-weight: 700;
+    min-height: 2rem;
+}
+
+/* ==================== Hero Banner ==================== */
+.hero {
+    position: relative;
+    height: 80vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 4%;
+    max-width: 600px;
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    line-height: 1.1;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    max-width: 500px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+.btn-play {
+    background-color: var(--netflix-white);
+    color: var(--netflix-black);
+}
+
+.btn-play:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.05);
+}
+
+.btn-info {
+    background-color: rgba(109, 109, 110, 0.7);
+    color: var(--netflix-white);
+}
+
+.btn-info:hover {
+    background-color: rgba(109, 109, 110, 0.5);
+    transform: scale(1.05);
+}
+
+.hero-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(180deg, rgba(20, 20, 20, 0) 0%, rgba(20, 20, 20, 1) 100%);
+}
+
+/* ==================== Movie Sections ==================== */
+.movie-section {
+    padding: 0 4%;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--netflix-white);
+}
+
+.movie-row-container {
+    position: relative;
+}
+
+.movie-row {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding: 1rem 0;
+}
+
+.movie-row::-webkit-scrollbar {
+    display: none;
+}
+
+.row-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: var(--netflix-white);
+    width: 50px;
+    height: 100%;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0;
+    transition: all var(--transition-speed);
+}
+
+.movie-row-container:hover .row-nav {
+    opacity: 1;
+}
+
+.row-nav:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.row-nav-left {
+    left: 0;
+}
+
+.row-nav-right {
+    right: 0;
+}
+
+.row-nav svg {
+    width: 30px;
+    height: 30px;
+}
+
+/* ==================== Movie Cards ==================== */
+.movie-card {
+    position: relative;
+    min-width: 250px;
+    height: 140px;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    background-color: var(--netflix-dark-gray);
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+    z-index: 5;
+}
+
+.movie-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity var(--transition-speed);
+}
+
+.movie-card:hover img {
+    opacity: 0.7;
+}
+
+.movie-card-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%);
+    opacity: 0;
+    transition: opacity var(--transition-speed);
+}
+
+.movie-card:hover .movie-card-info {
+    opacity: 1;
+}
+
+.movie-card-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.movie-card-rating {
+    font-size: 0.8rem;
+    color: #46d369;
+    font-weight: 600;
+}
+
+/* Top 10 Badge */
+.top10-badge {
+    position: absolute;
+    left: -10px;
+    bottom: -10px;
+    width: 60px;
+    height: 80px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.top10-number {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    font-size: 5rem;
+    font-weight: 900;
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    color: var(--netflix-black);
+    -webkit-text-stroke: 3px var(--netflix-white);
+    text-stroke: 3px var(--netflix-white);
+    z-index: 2;
+    line-height: 1;
+}
+
+/* ==================== Modal ==================== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-speed);
+}
+
+.modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    position: relative;
+    background: var(--netflix-dark-gray);
+    border-radius: 8px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: var(--netflix-white);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    transition: all var(--transition-speed);
+}
+
+.modal-close:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: scale(1.1);
+}
+
+.modal-close svg {
+    width: 24px;
+    height: 24px;
+}
+
+.modal-video {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    background: var(--netflix-black);
+    border-radius: 8px 8px 0 0;
+}
+
+.modal-video iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px 8px 0 0;
+}
+
+.modal-info {
+    padding: 2rem;
+}
+
+.modal-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.modal-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.modal-rating {
+    color: #46d369;
+    font-weight: 600;
+}
+
+.modal-year,
+.modal-runtime {
+    color: var(--netflix-light-gray);
+}
+
+.modal-overview {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: var(--netflix-white);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--netflix-light-gray);
+    background: transparent;
+    color: var(--netflix-white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-speed);
+}
+
+.btn-icon:hover {
+    border-color: var(--netflix-white);
+    transform: scale(1.1);
+}
+
+.btn-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ==================== Footer ==================== */
+.footer {
+    padding: 4rem 4%;
+    background-color: var(--netflix-black);
+    border-top: 1px solid var(--netflix-gray);
+    margin-top: 4rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.footer-links a {
+    color: var(--netflix-light-gray);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color var(--transition-speed);
+}
+
+.footer-links a:hover {
+    color: var(--netflix-white);
+}
+
+.footer-copy {
+    text-align: center;
+    color: var(--netflix-light-gray);
+    font-size: 0.85rem;
+}
+
+/* ==================== Responsive Design ==================== */
+@media (max-width: 1024px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .movie-card {
+        min-width: 200px;
+        height: 112px;
+    }
+    
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+    
+    .movie-card {
+        min-width: 150px;
+        height: 84px;
+    }
+    
+    .section-title {
+        font-size: 1.2rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-video {
+        height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: 80px;
+    }
+    
+    .hero {
+        height: 60vh;
+    }
+    
+    .hero-title {
+        font-size: 1.5rem;
+    }
+    
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .movie-card {
+        min-width: 120px;
+        height: 67px;
+    }
+}
